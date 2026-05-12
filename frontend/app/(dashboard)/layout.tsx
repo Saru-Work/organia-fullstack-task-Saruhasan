@@ -26,13 +26,13 @@ export default function DashboardLayout({
 }>) {
   return (
     <Providers>
-      <div className="min-h-full flex flex-col">
+      <div className="flex flex-col min-h-screen overflow-auto">
         <AuthLoader />
         <div className="flex">
           <div className="flex-1">
             <Sidebar />
           </div>
-          <main className="flex-4">{children}</main>
+          <main className="flex-4 h-screen overflow-auto">{children}</main>
         </div>
       </div>
     </Providers>

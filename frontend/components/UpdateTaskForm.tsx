@@ -1,15 +1,18 @@
-import { PlusCircleIcon } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { setUser } from "@/store/userSlice";
+"use client";
 import { fetchUser } from "@/utils/fetchUser";
+import type { Task } from "@/utils/getCounts";
+import { PlusCircleIcon } from "lucide-react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch } from "react-redux";
-const NewTaskForm = ({
-  setNewTaskFormOpen,
+import { setUser } from "@/store/userSlice";
+const UpdateTaskForm = ({
+  setUpdateTaskFormOpen,
+  existingTask,
 }: {
-  setNewTaskFormOpen: Dispatch<SetStateAction<boolean>>;
+  setUpdateTaskFormOpen: Dispatch<SetStateAction<boolean>>;
+  existingTask: Task;
 }) => {
-  const dispatch = useDispatch();
   const options = [
     "work",
     "health",
@@ -18,6 +21,8 @@ const NewTaskForm = ({
     "personal",
     "finance",
   ];
+  const dispatch = useDispatch();
+  const statuses = ["TO_DO", "IN_PROGRESS", "COMPLETED"];
   type Input = {
     title: string;
     description: string;
@@ -35,26 +40,31 @@ const NewTaskForm = ({
   const onSubmit: SubmitHandler<Input> = async (data) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:8080/tasks", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `http://localhost:8080/tasks/update/${existingTask.id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify({ ...data, status: "TO_DO" }),
-      });
+      );
+      setUpdateTaskFormOpen(false);
+
+      console.log(data);
       const user = await fetchUser();
       dispatch(setUser(user));
-      setNewTaskFormOpen(false);
     } catch (err) {
       console.log(err);
     }
   };
   return (
     <div
-      className="absolute inset-0 h-screen w-screen bg-black/20 z-10 flex items-center justify-center"
+      className="fixed inset-0 h-screen w-screen bg-black/20 z-10 flex items-center justify-center"
       onClick={(e) => {
-        setNewTaskFormOpen(false);
+        setUpdateTaskFormOpen(false);
       }}
     >
       <form
@@ -78,6 +88,7 @@ const NewTaskForm = ({
               placeholder="What need to be done?"
               className="bg-white p-4 w-full rounded-lg"
               type="text"
+              defaultValue={existingTask?.title}
               {...register("title")}
             />
           </div>
@@ -89,6 +100,7 @@ const NewTaskForm = ({
               placeholder="Add more details..."
               className="bg-white p-4 w-full rounded-lg"
               type="text"
+              defaultValue={existingTask.description}
               {...register("description")}
             />
           </div>
@@ -103,6 +115,7 @@ const NewTaskForm = ({
                   placeholder="What need to be done?"
                   className="bg-white p-4 w-full rounded-lg "
                   type="date"
+                  defaultValue={existingTask.dueDate}
                   {...register("dueDate")}
                 />
               </div>
@@ -116,6 +129,7 @@ const NewTaskForm = ({
                   placeholder="What need to be done?"
                   className="bg-white p-4 w-full rounded-lg"
                   type="time"
+                  defaultValue={existingTask.time}
                   {...register("time")}
                 />
               </div>
@@ -129,6 +143,7 @@ const NewTaskForm = ({
                   Category
                 </label>
                 <select
+                  defaultValue={existingTask.category}
                   {...register("category")}
                   className="bg-white p-4 w-full rounded-lg"
                 >
@@ -141,20 +156,37 @@ const NewTaskForm = ({
                   })}
                 </select>
               </div>
+
+              <div>
+                <label className="block font-medium text-sm mb-2">Status</label>
+                <select
+                  defaultValue={existingTask.status}
+                  {...register("status")}
+                  className="bg-white p-4 w-full rounded-lg"
+                >
+                  {statuses.map((status, i) => {
+                    return (
+                      <option key={i} value={status}>
+                        {status.toUpperCase()}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
           </div>
         </div>
         <div className="py-5 flex gap-2 justify-end px-10">
           <button
             onClick={() => {
-              setNewTaskFormOpen(false);
+              setUpdateTaskFormOpen(false);
             }}
             className="py-2 px-5 rounded-lg text-sm font-medium border border-gray-700 text-gray-700"
           >
             Cancel
           </button>
           <button className="py-2 px-5 bg-text-primary rounded-lg text-sm font-medium text-white">
-            Create Task
+            Update Task
           </button>
         </div>
       </form>
@@ -162,4 +194,4 @@ const NewTaskForm = ({
   );
 };
 
-export default NewTaskForm;
+export default UpdateTaskForm;

@@ -25,7 +25,9 @@ export default function Home() {
           {username ? (
             <div>
               {getGreeting()}{" "}
-              <span className="text-text-primary">{username}</span>
+              <span className="text-text-primary">
+                {username.charAt(0).toUpperCase() + username.slice(1)}
+              </span>
             </div>
           ) : (
             <div>{getGreeting()}</div>

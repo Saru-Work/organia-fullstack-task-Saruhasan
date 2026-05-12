@@ -31,6 +31,7 @@ public class Task {
     private LocalTime time;
 
     private String category;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

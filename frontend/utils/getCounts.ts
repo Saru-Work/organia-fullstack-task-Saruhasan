@@ -6,6 +6,8 @@ export type Task = {
   id: number;
   dueDate: string;
   status: string;
+  category: string;
+  time: string;
 };
 
 export const getCounts = (tasks: Task[]) => {

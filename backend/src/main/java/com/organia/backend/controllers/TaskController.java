@@ -27,6 +27,11 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getAllTasksForUser(user));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTask(@PathVariable long id){
+        return new ResponseEntity<>(taskService.getTask(id), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task, Authentication authentication) {
 
@@ -38,13 +43,13 @@ public class TaskController {
         return ResponseEntity.ok(taskService.createTask(task, user));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateTask(
             @PathVariable Long id,
             @RequestBody Task taskDetails,

@@ -1,6 +1,4 @@
 import type { Task } from "@/utils/getCounts";
-import React from "react";
-import { useSelector } from "react-redux";
 import TaskCard from "./TaskCard";
 
 const Tasks = ({ tasks }: { tasks: Task[] }) => {

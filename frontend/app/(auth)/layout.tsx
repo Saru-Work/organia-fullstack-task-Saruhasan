@@ -22,7 +22,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col w-screen min-h-screen bg-center bg-no-repeat bg-cover">
+    <div className="flex flex-col w-screen min-h-screen overflow-auto bg-center bg-no-repeat bg-cover">
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
         style={{
