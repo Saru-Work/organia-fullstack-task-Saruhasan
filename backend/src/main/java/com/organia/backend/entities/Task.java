@@ -1,7 +1,6 @@
 package com.organia.backend.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
