@@ -23,13 +23,16 @@ const register = () => {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      const res = await fetch("http://localhost:8080/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
+      );
       const text = await res.text();
       if (!res.ok) {
         setSubmissionError(JSON.stringify(text));

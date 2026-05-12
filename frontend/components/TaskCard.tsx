@@ -51,7 +51,7 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
               try {
                 const token = localStorage.getItem("token");
                 const res = await fetch(
-                  `http://localhost:8080/tasks/delete/${task.id}`,
+                  `${process.env.NEXT_PUBLIC_API_URL}/tasks/delete/${task.id}`,
                   {
                     method: "DELETE",
                     headers: {
