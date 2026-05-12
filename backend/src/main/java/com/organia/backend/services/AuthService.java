@@ -3,7 +3,6 @@ package com.organia.backend.services;
 import com.organia.backend.dto.LoginRequest;
 import com.organia.backend.entities.User;
 import com.organia.backend.repositories.UserRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -41,4 +42,7 @@ public class AuthService {
         }
     }
 
+    public Optional<User> getMe(User user){
+       return userRepository.findById(user.getId());
+    }
 }

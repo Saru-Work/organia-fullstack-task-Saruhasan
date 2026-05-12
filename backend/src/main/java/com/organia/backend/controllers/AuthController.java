@@ -1,19 +1,28 @@
 package com.organia.backend.controllers;
 import com.organia.backend.dto.LoginRequest;
 import com.organia.backend.entities.User;
+import com.organia.backend.repositories.UserRepository;
 import com.organia.backend.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/register")
     ResponseEntity<?> registerUser(@RequestBody User user){
         try{
@@ -33,5 +42,12 @@ public class AuthController {
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error");
         }
+    }
+
+    @GetMapping("/getMe")
+    ResponseEntity<Optional<User>> getMe(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User currentUser = userRepository.findByEmail(userDetails.getUsername());
+        return new ResponseEntity<>(authService.getMe(currentUser), HttpStatus.OK);
     }
 }
