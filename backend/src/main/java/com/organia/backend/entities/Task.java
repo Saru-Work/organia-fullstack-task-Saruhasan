@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "tasks")
@@ -27,6 +28,9 @@ public class Task {
 
     private LocalDate dueDate;
 
+    private LocalTime time;
+
+    private String category;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

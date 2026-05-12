@@ -6,6 +6,8 @@
   --text-primary: #F16F13;
   --sidebar: #F7E8E8;
   --sidebar-border: #F16F13;
+  --form-background: #F7E8E8;
+  --form-header-background: #FFA96C;
 }
 
 @theme inline {
@@ -14,6 +16,8 @@
   --color-text-primary: var(--text-primary);
   --color-sidebar: var(--sidebar);
   --color-sidebar-border: var(--sidebar-border);
+  --color-form-background: var(--form-background);
+  --color-form-header-background: var(--form-header-background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
