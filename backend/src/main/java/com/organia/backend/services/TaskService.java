@@ -28,6 +28,32 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+//    public Task completeTask(Long id, Task taskDetails, User user){
+//        Task existingTask = taskRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+//
+//        if (!existingTask.getUser().getId().equals(user.getId())) {
+//            throw new RuntimeException("You do not have permission to update this task");
+//        }
+//        existingTask.setStatus(Task.Status.COMPLETED);
+//
+//        return taskRepository.save(existingTask);
+//
+//    }
+//
+//    public Task incompleteTask(Long id, Task taskDetails, User user){
+//        Task existingTask = taskRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+//
+//        if (!existingTask.getUser().getId().equals(user.getId())) {
+//            throw new RuntimeException("You do not have permission to update this task");
+//        }
+//        existingTask.setStatus(Task.Status.COMPLETED);
+//
+//        return taskRepository.save(existingTask);
+//
+//    }
+
     public Task updateTask(Long id, Task taskDetails, User user) {
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));

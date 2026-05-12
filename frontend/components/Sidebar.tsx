@@ -1,7 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { BookCheck, Settings2Icon, HomeIcon } from "lucide-react";
+import { useSelector } from "react-redux";
 const Sidebar = () => {
+  const user = useSelector((store: any) => store.user.user);
   const router = useRouter();
   const navigations = [
     { title: "Dashboard", route: "/", Icon: HomeIcon },
@@ -28,6 +30,10 @@ const Sidebar = () => {
           );
         })}
       </ul>
+      <div className="absolute bottom-10 p-1 rounded-lg">
+        <div className="text-sm font-bold">{user?.username}</div>
+        <div className="text-sm">{user?.email}</div>
+      </div>
     </aside>
   );
 };

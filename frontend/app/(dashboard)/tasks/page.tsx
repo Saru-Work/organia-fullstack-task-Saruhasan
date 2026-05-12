@@ -1,13 +1,27 @@
 "use client";
+import NewTaskForm from "@/components/NewTaskForm";
 import Tasks from "@/components/Tasks";
-import React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const page = () => {
   const tasks = useSelector((store: any) => store?.user?.user?.tasks ?? []);
+  const [newTaskFormOpen, setNewTaskFormOpen] = useState(false);
   return (
     <div className="p-10">
-      <h1 className="text-2xl mb-5 font-medium">Tasks</h1>
+      {newTaskFormOpen && (
+        <NewTaskForm setNewTaskFormOpen={setNewTaskFormOpen} />
+      )}
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-medium">Tasks</h1>
+        <button
+          onClick={() => {
+            setNewTaskFormOpen(true);
+          }}
+        >
+          Add Task
+        </button>
+      </div>
       <Tasks tasks={tasks} />
     </div>
   );
