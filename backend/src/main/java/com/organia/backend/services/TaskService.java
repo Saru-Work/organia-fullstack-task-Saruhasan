@@ -26,22 +26,18 @@ public class TaskService {
     }
 
     public Task updateTask(Long id, Task taskDetails, User user) {
-        // 1. Find the existing task
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
 
-        // 2. Security Check: Ensure the user owns this task
         if (!existingTask.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("You do not have permission to update this task");
         }
 
-        // 3. Apply updates
         existingTask.setTitle(taskDetails.getTitle());
         existingTask.setDescription(taskDetails.getDescription());
         existingTask.setStatus(taskDetails.getStatus());
         existingTask.setDueDate(taskDetails.getDueDate());
 
-        // 4. Save and return
         return taskRepository.save(existingTask);
     }
 }
