@@ -16,6 +16,7 @@ const AuthLoader = () => {
           "Content-Type": "application/json",
         },
       });
+
       const json = await res.json();
       if (res.ok) {
         dispatch(setUser(json));
