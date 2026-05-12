@@ -17,7 +17,7 @@ const login = () => {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      const res = await fetch("http://localhost:8080/auth/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

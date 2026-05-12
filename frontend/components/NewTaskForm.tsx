@@ -35,7 +35,7 @@ const NewTaskForm = ({
   const onSubmit: SubmitHandler<Input> = async (data) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:8080/tasks", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

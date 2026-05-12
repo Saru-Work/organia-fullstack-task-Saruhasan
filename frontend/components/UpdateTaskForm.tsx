@@ -41,7 +41,7 @@ const UpdateTaskForm = ({
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        `http://localhost:8080/tasks/update/${existingTask.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks/update/${existingTask.id}`,
         {
           method: "PUT",
           headers: {
