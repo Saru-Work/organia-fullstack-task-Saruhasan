@@ -9,7 +9,6 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
   const navigations = [
     { title: "Dashboard", route: "/", Icon: HomeIcon },
     { title: "Tasks", route: "/tasks", Icon: BookCheck },
-    { title: "Settings", route: "/settings", Icon: Settings2Icon },
   ];
   const pathname = usePathname();
   return (
