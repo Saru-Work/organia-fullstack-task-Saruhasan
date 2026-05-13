@@ -1,10 +1,5 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+"use client";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import { PlusIcon } from "lucide-react";
 import Tasks from "./Tasks";
 import { useSelector } from "react-redux";
@@ -34,9 +29,9 @@ const TodayTasks = ({
           onClick={() => {
             setNewTaskFormOpen(true);
           }}
-          className="flex gap-2 bg-text-primary items-center rounded-lg px-3 py-2 text-white font-bold cursor-pointer hover:bg-orange-400"
+          className="flex gap-2 bg-text-primary items-center rounded-md px-3 py-2 text-white font-medium cursor-pointer hover:bg-orange-400"
         >
-          <PlusIcon className="font-bold" size={20} />
+          <PlusIcon className="font-bold" size={18} />
           <div className="text-sm">Add Task</div>
         </button>
       </div>

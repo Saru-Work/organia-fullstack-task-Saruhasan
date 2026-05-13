@@ -21,7 +21,7 @@ export default function Home() {
       )}
       <section>
         <div>{format(today, "EEEE, MMMM d")}</div>
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-3xl font-medium">
           {username ? (
             <div>
               {getGreeting()}{" "}

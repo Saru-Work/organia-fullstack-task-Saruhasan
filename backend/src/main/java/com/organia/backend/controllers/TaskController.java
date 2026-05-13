@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/tasks")
@@ -59,6 +60,30 @@ public class TaskController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User currentUser = userRepository.findByEmail(userDetails.getUsername());
             Task updatedTask = taskService.updateTask(id, taskDetails, currentUser);
+            return ResponseEntity.ok(updatedTask);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<?> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> statusUpdate,
+            Authentication authentication) {
+
+        try {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User currentUser = userRepository.findByEmail(userDetails.getUsername());
+
+            String newStatus = statusUpdate.get("status");
+            if (newStatus == null) {
+                return ResponseEntity.badRequest().body("Status field is required");
+            }
+
+            Task updatedTask = taskService.updateTaskStatus(id, newStatus, currentUser);
             return ResponseEntity.ok(updatedTask);
 
         } catch (RuntimeException e) {

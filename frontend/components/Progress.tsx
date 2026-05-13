@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { isToday } from "date-fns";

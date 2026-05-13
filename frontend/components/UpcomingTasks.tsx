@@ -1,8 +1,8 @@
+"use client";
 import { useMemo } from "react";
 import { isToday } from "date-fns";
 import type { Task } from "@/utils/getCounts";
 import { useSelector } from "react-redux";
-import { PlusIcon } from "lucide-react";
 import Tasks from "./Tasks";
 const UpcomingTasks = () => {
   const tasks = useSelector((store: any) => store?.user?.user?.tasks) ?? [];

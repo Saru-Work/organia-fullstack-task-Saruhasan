@@ -1,3 +1,4 @@
+"use client";
 import type { Task } from "@/utils/getCounts";
 import TaskCard from "./TaskCard";
 
@@ -15,15 +16,16 @@ const Tasks = ({ tasks }: { tasks: Task[] }) => {
     "#D6E4FF",
   ];
 
-  function getRandomLightColor() {
-    const randomIndex = Math.floor(Math.random() * lightColors.length);
-
-    return lightColors[randomIndex];
-  }
   return (
     <div>
       {tasks.map((task: Task, i: number) => {
-        return <TaskCard color={getRandomLightColor()} key={i} task={task} />;
+        return (
+          <TaskCard
+            color={lightColors[i % lightColors.length]}
+            key={i}
+            task={task}
+          />
+        );
       })}
     </div>
   );

@@ -22,6 +22,7 @@ const UpdateTaskForm = ({
     "finance",
   ];
   const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const statuses = ["TO_DO", "IN_PROGRESS", "COMPLETED"];
   type Input = {
     title: string;
@@ -40,6 +41,7 @@ const UpdateTaskForm = ({
   const onSubmit: SubmitHandler<Input> = async (data) => {
     const token = localStorage.getItem("token");
     try {
+      setIsSubmitting(true);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/tasks/update/${existingTask.id}`,
         {
@@ -56,6 +58,7 @@ const UpdateTaskForm = ({
       console.log(data);
       const user = await fetchUser();
       dispatch(setUser(user));
+      setIsSubmitting(false);
     } catch (err) {
       console.log(err);
     }
@@ -178,6 +181,7 @@ const UpdateTaskForm = ({
         </div>
         <div className="py-5 flex gap-2 justify-end px-10">
           <button
+            disabled={isSubmitting}
             onClick={() => {
               setUpdateTaskFormOpen(false);
             }}
@@ -185,7 +189,10 @@ const UpdateTaskForm = ({
           >
             Cancel
           </button>
-          <button className="py-2 px-5 bg-text-primary rounded-lg text-sm font-medium text-white">
+          <button
+            disabled={isSubmitting}
+            className={`py-2 px-5 rounded-lg text-sm font-medium text-white ${isSubmitting ? "bg-text-primary/50 cursor-not-allowed" : "bg-text-primary cursor-pointer"}`}
+          >
             Update Task
           </button>
         </div>

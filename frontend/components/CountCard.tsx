@@ -10,13 +10,10 @@ const CountCard = ({ data }: DataProp) => {
   return (
     <div
       style={{ backgroundColor: data.fill, border: `1px solid ${data.stroke}` }}
-      className="flex flex-1 p-5 gap-2 rounded-2xl shadow-md"
+      className="flex flex-1 items-center px-10 py-5 justify-between rounded-lg shadow-md"
     >
-      <div>
-        <div className="w-10 h-10 bg-amber-500"></div>
-        <div>{data.status}</div>
-      </div>
       <div className="text-5xl">{data.count}</div>
+      <div className="text-xl">{data.status}</div>
     </div>
   );
 };

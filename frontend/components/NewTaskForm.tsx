@@ -1,5 +1,6 @@
+"use client";
 import { PlusCircleIcon } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { setUser } from "@/store/userSlice";
 import { fetchUser } from "@/utils/fetchUser";
@@ -9,6 +10,7 @@ const NewTaskForm = ({
 }: {
   setNewTaskFormOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const options = [
     "work",
@@ -34,7 +36,9 @@ const NewTaskForm = ({
   } = useForm<Input>();
   const onSubmit: SubmitHandler<Input> = async (data) => {
     const token = localStorage.getItem("token");
+
     try {
+      setIsSubmitting(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
         method: "POST",
         headers: {
@@ -45,6 +49,7 @@ const NewTaskForm = ({
       });
       const user = await fetchUser();
       dispatch(setUser(user));
+      setIsSubmitting(false);
       setNewTaskFormOpen(false);
     } catch (err) {
       console.log(err);
@@ -62,7 +67,7 @@ const NewTaskForm = ({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="w-[50%] bg-form-background/50 backdrop-blur-xs rounded-lg shadow-2xl"
+        className="w-[80%] sm:w-[60%] md:w-[50%]  bg-form-background/50 backdrop-blur-xs rounded-lg shadow-2xl"
       >
         <div className="h-14 w-full bg-form-header-background/70 rounded-t-lg flex gap-3 items-center px-5 text-sm">
           <PlusCircleIcon size={18} />
@@ -93,7 +98,7 @@ const NewTaskForm = ({
             />
           </div>
 
-          <div className="flex w-full gap-10 mb-5">
+          <div className="flex flex-col md:flex-row w-full gap-10 mb-5">
             <div className="flex-1">
               <div>
                 <label className="block font-medium text-sm mb-2">
@@ -149,11 +154,14 @@ const NewTaskForm = ({
             onClick={() => {
               setNewTaskFormOpen(false);
             }}
-            className="py-2 px-5 rounded-lg text-sm font-medium border border-gray-700 text-gray-700"
+            className="py-2 px-5 rounded-lg text-sm font-medium border hover:bg-white/20 border-gray-700 text-gray-700 cursor-pointer"
           >
             Cancel
           </button>
-          <button className="py-2 px-5 bg-text-primary rounded-lg text-sm font-medium text-white">
+          <button
+            disabled={isSubmitting}
+            className={`py-2 px-5 rounded-lg text-sm font-medium hover:bg-text-primary/80 text-white ${isSubmitting ? "bg-text-primary/50 cursor-not-allowed" : "bg-text-primary cursor-pointer"}`}
+          >
             Create Task
           </button>
         </div>

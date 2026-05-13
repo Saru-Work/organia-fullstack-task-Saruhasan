@@ -28,31 +28,18 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-//    public Task completeTask(Long id, Task taskDetails, User user){
-//        Task existingTask = taskRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
-//
-//        if (!existingTask.getUser().getId().equals(user.getId())) {
-//            throw new RuntimeException("You do not have permission to update this task");
-//        }
-//        existingTask.setStatus(Task.Status.COMPLETED);
-//
-//        return taskRepository.save(existingTask);
-//
-//    }
-//
-//    public Task incompleteTask(Long id, Task taskDetails, User user){
-//        Task existingTask = taskRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
-//
-//        if (!existingTask.getUser().getId().equals(user.getId())) {
-//            throw new RuntimeException("You do not have permission to update this task");
-//        }
-//        existingTask.setStatus(Task.Status.COMPLETED);
-//
-//        return taskRepository.save(existingTask);
-//
-//    }
+    public Task updateTaskStatus(Long taskId, String newStatus, User currentUser) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!task.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Unauthorized to update this task");
+        }
+
+        task.setStatus(Task.Status.valueOf(newStatus));
+
+        return taskRepository.save(task);
+    }
 
     public Task updateTask(Long id, Task taskDetails, User user) {
         Task existingTask = taskRepository.findById(id)

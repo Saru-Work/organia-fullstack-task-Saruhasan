@@ -13,7 +13,7 @@ const Counts = () => {
   if (!tasks) return null;
 
   return (
-    <div className="flex gap-2 mt-10">
+    <div className="flex gap-2 mt-10 flex-wrap">
       {counts.map((count, i) => {
         return <CountCard data={count} key={i} />;
       })}
