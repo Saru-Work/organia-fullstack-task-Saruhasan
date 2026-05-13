@@ -33,6 +33,9 @@ public class Task {
     private Status status;
 
 
+    @Column(columnDefinition = "TEXT")
+    private String notes;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -108,6 +111,13 @@ public class Task {
         this.category = category;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
 }
 

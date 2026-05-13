@@ -48,9 +48,9 @@ const register = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative flex items-center justify-center md:justify-end">
       <form
-        className="bg-white absolute right-0 min-w-2/5 h-screen rounded-l-[80px] flex items-center justify-center"
+        className="bg-white min-w-6/7 md:min-w-3/7 sm:5/7 h-screen md:rounded-l-[80px] flex items-center justify-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>

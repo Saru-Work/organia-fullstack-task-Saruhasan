@@ -58,4 +58,17 @@ public class TaskService {
 
         return taskRepository.save(existingTask);
     }
+
+    public Task updateTaskNotes(Long taskId, String newNotes, User currentUser) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!task.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Unauthorized to edit notes for this task");
+        }
+
+        task.setNotes(newNotes);
+
+        return taskRepository.save(task);
+    }
 }

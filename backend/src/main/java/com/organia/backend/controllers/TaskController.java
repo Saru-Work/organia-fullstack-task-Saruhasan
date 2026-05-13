@@ -90,4 +90,26 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
+
+    private User getCurrentUser(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userRepository.findByEmail(userDetails.getUsername());
+    }
+
+    @PatchMapping("/{id}/notes")
+    public ResponseEntity<?> updateNotes(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body,
+            Authentication authentication) {
+
+        try {
+            User user = getCurrentUser(authentication);
+            String notes = body.get("notes");
+
+            Task updatedTask = taskService.updateTaskNotes(id, notes, user);
+            return ResponseEntity.ok(updatedTask);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
 }

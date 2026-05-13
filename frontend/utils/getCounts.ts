@@ -8,6 +8,7 @@ export type Task = {
   status: string;
   category: string;
   time: string;
+  notes: string;
 };
 
 export const getCounts = (tasks: Task[]) => {

@@ -7,7 +7,7 @@ import { fetchUser } from "@/utils/fetchUser";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/userSlice";
 import DeleteModal from "./DeleteModal";
-
+import Link from "next/link";
 const TaskCard = ({ task, color }: { task: Task; color: string }) => {
   const dispatch = useDispatch();
   const [updateTaskFormOpen, setUpdateTaskFormOpen] = useState(false);
@@ -57,6 +57,7 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
           id={task.id}
         />
       )}
+      <Link href={`/task/${task.id}`}>
       <div
         className={`flex flex-col md:flex-row md:items-center md:justify-between gap-3 border border-text-primary my-1 px-5 py-3 rounded-lg relative ${isUpdating ? "opacity-50" : "opacity-100"}`}
       >
@@ -116,6 +117,7 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
           />
         </div>
       </div>
+      </Link>
     </>
   );
 };
