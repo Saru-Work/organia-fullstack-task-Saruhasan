@@ -57,7 +57,7 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
           id={task.id}
         />
       )}
-      <Link href={`/task/${task.id}`}>
+
       <div
         className={`flex flex-col md:flex-row md:items-center md:justify-between gap-3 border border-text-primary my-1 px-5 py-3 rounded-lg relative ${isUpdating ? "opacity-50" : "opacity-100"}`}
       >
@@ -77,11 +77,13 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
           />
 
           <div>
-            <div
-              className={`truncate ${task.status === "COMPLETED" || isDeleting ? "line-through text-gray-500" : ""}`}
-            >
-              {task.title}
-            </div>
+            <Link href={`/task/${task.id}`}>
+              <div
+                className={`truncate ${task.status === "COMPLETED" || isDeleting ? "line-through text-gray-500" : ""}`}
+              >
+                {task.title}
+              </div>
+            </Link>
             <div className="text-[0.7rem] text-gray-400">{task.dueDate}</div>
           </div>
         </div>
@@ -117,7 +119,6 @@ const TaskCard = ({ task, color }: { task: Task; color: string }) => {
           />
         </div>
       </div>
-      </Link>
     </>
   );
 };
