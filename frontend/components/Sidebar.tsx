@@ -2,6 +2,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { BookCheck, Settings2Icon, HomeIcon, LogOut } from "lucide-react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
   const user = useSelector((store: any) => store.user.user);
   const router = useRouter();
@@ -18,7 +19,9 @@ const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
           sm:translate-x-0 md:p-5 md:rounded-r-[20px] p-0`}
     >
       <div>
-        <h1 className="text-3xl px-2 font-bold text-red-600">TaskForce</h1>
+        <h1 className="text-3xl px-2 font-bold text-red-600">
+          <Link href="/">TaskForce</Link>
+        </h1>
       </div>
       <ul>
         {navigations.map((nav, i) => {
